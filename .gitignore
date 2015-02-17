@@ -31,3 +31,5 @@
 # Eclipse
 .metadata
 bin
+.cproject
+.project
