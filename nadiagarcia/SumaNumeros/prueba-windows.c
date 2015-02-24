@@ -73,7 +73,7 @@ int main() {
 	NUMERO *actual_num2 = numero2;
 
 	printf("\nNumero 2: ");
-	while (actual_num2 != NULL) {
+	while (actual_num2->siguiente != NULL) {
 		printf("%d", actual_num2->numero);
 		actual_num2 = actual_num2->siguiente;
 	}
@@ -81,7 +81,20 @@ int main() {
 
 
 	//suma
-//	NUMERO *resultado;
+	NUMERO *resultado;
+	int carry = 0;
+	int suma;
+
+	while(actual_num2 != NULL){
+		suma = carry + actual_num1->numero + actual_num2->numero;
+		resultado = (NUMERO *) malloc(sizeof(NUMERO));
+		resultado->siguiente = NULL;
+		resultado->anterior = NULL;
+
+		if(suma>9){
+			carry = 1;
+		}
+	}
 
 
 
