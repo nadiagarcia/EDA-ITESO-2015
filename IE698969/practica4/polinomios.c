@@ -18,7 +18,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <math.h> //Se agrega para operaciones matematicas
 //Se crea una lista para guardar cada termino del polinomio
 typedef struct nodo {
 	int coeficiente;
@@ -34,23 +34,67 @@ int main() {
 	TERMINO *inicio = NULL;
 	TERMINO *nuevo = (TERMINO *) malloc(sizeof(TERMINO));
 	TERMINO *actual;
-	TERMINO *anterior;
 
 	//Variables
-	int variableX, seleccion, salir;
+	int variableX, seleccion, salir = 1, resultado;
 
 	while (salir) {
 		printf("Calcular Polinomio.\n");
 		printf("Seleccione\n");
-		printf("1.Agregar termino al polinomio.\n");
+		printf("1. Agregar termino al polinomio.\n");
+		printf("2. Evaluar polinomio.\n");
+		printf("3. Salir.\n");
 
 		scanf("%d", &seleccion);
 
 		switch (seleccion) {
 
 		case 1:
-			//codigo
-		break;
+			//Inicializar nuevo
+			nuevo = (TERMINO *) malloc(sizeof(TERMINO));
+			nuevo->siguiente = NULL;
+
+			//Agregar termino al polinomio
+			printf("Ingrese coeficiente.\n");
+			scanf("%d", &nuevo->coeficiente);
+			printf("Ingrese exponente.\n");
+			scanf("%d", &nuevo->exponente);
+
+			if (inicio == NULL) {
+				inicio = nuevo;
+			} else {
+				actual = inicio;
+				nuevo->siguiente = inicio;
+				inicio = nuevo;
+				printf("Elemento agregado\n");
+			}
+			break;
+
+		case 2:
+			//Evaluar polinomio
+			resultado = 0;
+
+			//Ingresar el valor de vaeriableX
+			printf("Ingrese el valor de X\n");
+			scanf("%d", &variableX);
+
+			//Operaciones
+			actual = inicio;
+			if (actual != NULL) {
+				while (actual->siguiente != NULL) {
+					//Hacer operaciones e ir guardando en resultado
+					resultado = resultado + ((pow(variableX, actual->exponente)) * (actual->coeficiente));
+				}
+			} else {
+				printf("No hay elementos en el polinomio.");
+			}
+			printf("Resultado: %d", resultado);
+			break;
+
+		case 3:
+			//Salir
+			salir = 0;
+			break;
 
 		default:
 			printf("Seleccione una opcion valida.\n");
