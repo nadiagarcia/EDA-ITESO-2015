@@ -16,8 +16,47 @@
  *      Author: ie698969
  */
 
+#include <stdio.h>
+#include <stdlib.h>
 
-int main{
-	/*Codigo*/
+//Se crea una lista para guardar cada termino del polinomio
+typedef struct nodo {
+	int coeficiente;
+	int exponente;
+	struct nodo * siguiente;
+} TERMINO;
+
+int main() {
+	//Codigo eclipse
+	setvbuf(stdout, NULL, _IONBF, 0);
+
+	//Inicializar lista
+	TERMINO *inicio = NULL;
+	TERMINO *nuevo = (TERMINO *) malloc(sizeof(TERMINO));
+	TERMINO *actual;
+	TERMINO *anterior;
+
+	//Variables
+	int variableX, seleccion, salir;
+
+	while (salir) {
+		printf("Calcular Polinomio.\n");
+		printf("Seleccione\n");
+		printf("1.Agregar termino al polinomio.\n");
+
+		scanf("%d", &seleccion);
+
+		switch (seleccion) {
+
+		case 1:
+			//codigo
+		break;
+
+		default:
+			printf("Seleccione una opcion valida.\n");
+			break;
+		}
+
+	}
 	return 0;
 }
