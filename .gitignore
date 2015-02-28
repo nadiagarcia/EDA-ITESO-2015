@@ -36,4 +36,4 @@ bin
 .settings
 
 #Xcode
-.xcodeproj
+*.xcodeproj
