@@ -34,3 +34,6 @@ bin
 .cproject
 .project
 .settings
+
+#Xcode
+.xcodeproj
