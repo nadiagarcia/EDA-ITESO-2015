@@ -1,0 +1,3 @@
+first call the function expects c string as argument for str
+whose first character is used as the starting location to scan for tokens
+in subsequent calls the function expects pointer and uses the position
