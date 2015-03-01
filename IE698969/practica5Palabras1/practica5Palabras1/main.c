@@ -28,7 +28,7 @@ int main (int argc, char* argv[]) {
     FILE * archivoPalabras; //FILE es el objeto que contiene informacion para controlar un stream
     char cadena[100];
     char * cadenaSeparada;
-    int encontrado = 0;
+    int encontrado = 0, comparacion;
     //Abrir texto.txt en modo lectura
     archivoPalabras = fopen("texto.txt", "r"); //fopen regresa un apuntador a un objeto FILE, si no lo encuentra a NULL
     
@@ -51,16 +51,26 @@ int main (int argc, char* argv[]) {
                     inicio = nuevo;
                 } else {
                     actual = inicio;
-                    while (!encontrado) {
-                        if (strcmp(nuevo->palabraOrdenada, actual->palabraOrdenada) <= 0) {
+                    printf("Justo antes del while\n");
+                    while (actual != NULL && !encontrado) {
+                        printf("Es inicio del while\n");
+                        printf("Antes comparacion vale %d\n", comparacion);
+                        comparacion = strcmp(actual->siguiente->palabraOrdenada, nuevo->palabraOrdenada);
+                        printf("Despues de strcmp\n");
+                        printf("Despues comparacion vale %d\n", comparacion);
+                        if (comparacion <= 0) {
+                            printf("Es if\n");
                             encontrado = 1;
+                            nuevo->siguiente = actual->siguiente;
+                            actual->siguiente = nuevo;
                         } else {
+                            printf("En else\n");
                             actual = actual->siguiente;
                         }
-                        nuevo->siguiente = actual;
                     }
+                    printf("Saliendo del while\n");
                 }
-                printf ("%s\n",cadenaSeparada); //Imprime cada cadenaSeparada
+                printf ("Cadena separada: %s\n",cadenaSeparada); //Imprime cada cadenaSeparada
                 cadenaSeparada = strtok (NULL, " ");//Para que siga dividiendo donde se quedo
             }
         }
