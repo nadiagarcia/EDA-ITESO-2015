@@ -65,7 +65,6 @@ int main() {
                 if (inicio == NULL) {
                     inicio = nuevo;
                 } else {
-                    actual = inicio;
                     nuevo->siguiente = inicio;
                     inicio = nuevo;
                     printf("Elemento agregado\n");
@@ -76,7 +75,7 @@ int main() {
                 //Evaluar polinomio
                 resultado = 0;
                 
-                //Ingresar el valor de vaeriableX
+                //Ingresar el valor de variableX
                 printf("Ingrese el valor de X\n");
                 scanf("%d", &variableX);
                 
