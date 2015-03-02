@@ -58,7 +58,7 @@ int main (int argc, char* argv[]) {
                     }
                     if (strcmp(actual->palabraOrdenada, nuevo->palabraOrdenada) != 0) {
                         if (actual == inicio) {
-                            nuevo->siguiente = nuevo;
+                            nuevo->siguiente = inicio;
                             inicio = nuevo;
                         } else if (actual->siguiente == NULL){ //En caso de que sea el final
                             actual->siguiente = nuevo;
