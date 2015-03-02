@@ -18,6 +18,7 @@
 typedef struct palabra {
     char palabraOrdenada[30];
     struct palabra *siguiente;
+    struct palabra *anterior;
 } PALABRA;
 
 int main (int argc, char* argv[]) {
@@ -28,9 +29,7 @@ int main (int argc, char* argv[]) {
     FILE * archivoPalabras; //FILE es el objeto que contiene informacion para controlar un stream
     char cadena[100];
     char * cadenaSeparada;
-    int encontrado = 0, comparacion = 0;
-    char cadena1[20];
-    char cadena2[20];
+    int encontrado = 0;
     //Abrir texto.txt en modo lectura
     archivoPalabras = fopen("texto.txt", "r"); //fopen regresa un apuntador a un objeto FILE, si no lo encuentra a NULL
     
@@ -45,6 +44,7 @@ int main (int argc, char* argv[]) {
             while (cadenaSeparada != NULL) {
                 nuevo = (PALABRA *) malloc (sizeof (PALABRA)); //Inicializar nuevo
                 nuevo->siguiente = NULL;
+                nuevo->anterior = NULL;
                 strcpy(nuevo->palabraOrdenada, cadenaSeparada);
                 
                 //Ordenar palabras
@@ -55,22 +55,10 @@ int main (int argc, char* argv[]) {
                     actual = inicio;
                     printf("Justo antes del while\n");
                     while (actual != NULL && !encontrado) {
-                        printf("Es inicio del while\n");
-                        strcpy(cadena1, actual->palabraOrdenada);
-                        strcpy(cadena2, nuevo->palabraOrdenada);
-                        printf("Antes comparacion vale igual a %d\n", comparacion);
-                        comparacion = strcmp(cadena1,cadena2);
-                        printf("Despues de strcmp2\n");
-                        printf("Despues comparacion vale %d\n", comparacion);
-                        if (comparacion <= 0) {
-                            printf("Es if\n");
-                            encontrado = 1;
-                            nuevo->siguiente = actual->siguiente;
-                            actual->siguiente = nuevo;
-                        } else {
-                            printf("En else\n");
-                            actual = actual->siguiente;
+                        if (strcmp(nuevo->palabraOrdenada, actual->palabraOrdenada) <= 0) {
+                            //Ordenar palabras
                         }
+                        actual = actual->siguiente;
                     }
                     printf("Saliendo del while\n");
                 }
@@ -89,5 +77,5 @@ int main (int argc, char* argv[]) {
         actual = actual->siguiente;
     }
     
-    return 0;
+    return 0;	
 }
