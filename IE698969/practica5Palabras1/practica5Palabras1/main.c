@@ -16,7 +16,7 @@
 
 //Crear mi estructura para la lista de palabras
 typedef struct palabra {
-    char palabraOrdenada[20];
+    char palabraOrdenada[30];
     struct palabra *siguiente;
 } PALABRA;
 
@@ -28,7 +28,9 @@ int main (int argc, char* argv[]) {
     FILE * archivoPalabras; //FILE es el objeto que contiene informacion para controlar un stream
     char cadena[100];
     char * cadenaSeparada;
-    int encontrado = 0, comparacion;
+    int encontrado = 0, comparacion = 0;
+    char cadena1[20];
+    char cadena2[20];
     //Abrir texto.txt en modo lectura
     archivoPalabras = fopen("texto.txt", "r"); //fopen regresa un apuntador a un objeto FILE, si no lo encuentra a NULL
     
@@ -54,9 +56,11 @@ int main (int argc, char* argv[]) {
                     printf("Justo antes del while\n");
                     while (actual != NULL && !encontrado) {
                         printf("Es inicio del while\n");
-                        printf("Antes comparacion vale %d\n", comparacion);
-                        comparacion = strcmp(actual->siguiente->palabraOrdenada, nuevo->palabraOrdenada);
-                        printf("Despues de strcmp\n");
+                        strcpy(cadena1, actual->palabraOrdenada);
+                        strcpy(cadena2, nuevo->palabraOrdenada);
+                        printf("Antes comparacion vale igual a %d\n", comparacion);
+                        comparacion = strcmp(cadena1,cadena2);
+                        printf("Despues de strcmp2\n");
                         printf("Despues comparacion vale %d\n", comparacion);
                         if (comparacion <= 0) {
                             printf("Es if\n");
@@ -85,5 +89,5 @@ int main (int argc, char* argv[]) {
         actual = actual->siguiente;
     }
     
-    return 0;	
+    return 0;
 }
