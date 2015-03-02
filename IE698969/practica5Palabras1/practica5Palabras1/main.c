@@ -18,18 +18,17 @@
 typedef struct palabra {
     char palabraOrdenada[30];
     struct palabra *siguiente;
-    struct palabra *anterior;
 } PALABRA;
 
 int main (int argc, char* argv[]) {
     PALABRA *actual;
     PALABRA *nuevo;
     PALABRA *inicio = NULL;
+    PALABRA *anterior;
     
     FILE * archivoPalabras; //FILE es el objeto que contiene informacion para controlar un stream
     char cadena[100];
     char * cadenaSeparada;
-    int encontrado = 0;
     //Abrir texto.txt en modo lectura
     archivoPalabras = fopen("texto.txt", "r"); //fopen regresa un apuntador a un objeto FILE, si no lo encuentra a NULL
     
@@ -44,7 +43,6 @@ int main (int argc, char* argv[]) {
             while (cadenaSeparada != NULL) {
                 nuevo = (PALABRA *) malloc (sizeof (PALABRA)); //Inicializar nuevo
                 nuevo->siguiente = NULL;
-                nuevo->anterior = NULL;
                 strcpy(nuevo->palabraOrdenada, cadenaSeparada);
                 
                 //Ordenar palabras
@@ -54,12 +52,22 @@ int main (int argc, char* argv[]) {
                 } else {
                     actual = inicio;
                     printf("Justo antes del while\n");
-                    while (actual != NULL && !encontrado) {
-                        if (strcmp(nuevo->palabraOrdenada, actual->palabraOrdenada) <= 0) {
-                            //Ordenar palabras
-                        }
+                    while (actual->siguiente != NULL && strcmp(actual->palabraOrdenada, nuevo->palabraOrdenada) < 0) {
+                        anterior = actual; //En caso de tener que agregar la palabra en medio de otras dos
                         actual = actual->siguiente;
                     }
+                    if (strcmp(actual->palabraOrdenada, nuevo->palabraOrdenada) != 0) {
+                        if (actual == inicio) {
+                            nuevo->siguiente = nuevo;
+                            inicio = nuevo;
+                        } else if (actual->siguiente == NULL){ //En caso de que sea el final
+                            actual->siguiente = nuevo;
+                        } else {
+                            anterior->siguiente = nuevo;
+                            nuevo->siguiente = actual;
+                        }
+                    }
+                    actual = actual->siguiente;
                     printf("Saliendo del while\n");
                 }
                 printf ("Cadena separada: %s\n",cadenaSeparada); //Imprime cada cadenaSeparada
