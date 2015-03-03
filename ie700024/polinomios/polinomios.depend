@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1425187660 source:c:\users\diego\documents\iteso\segundo semestre\estructura\eda-iteso-2015\ie700024\polinomios\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
