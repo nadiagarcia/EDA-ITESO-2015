@@ -13,7 +13,7 @@ int main(){
 	
 	char buff[1337];
 	char * pch;
-	int no_linea=1;
+	int no_linea=1, encontrado;
 	
 	WORD *inicio=NULL;
 	WORD *nuevo;
@@ -24,9 +24,8 @@ int main(){
 	FILE * archivo=fopen("Lista de palabras.txt","r");
 	if (archivo==NULL) perror ("Error opening file");
 	else{	
-		while(!feof(archivo)){
-			fgets(buff,1337,archivo);
-			pch=strtok(buff," ,.-");
+		while(fgets(buff,1337,archivo)){
+			pch=strtok(buff," ");
 			while(pch!=NULL){
 				nuevo=(WORD*)malloc(sizeof(WORD));
 				nuevo->siguiente=NULL;
@@ -35,23 +34,30 @@ int main(){
 				if(inicio==NULL){
 					inicio=nuevo;
 				}
-				else if(pch[1]!='\000'){
+				else{
 					actual=inicio;
 					anterior=actual;
-					while(strcmp(actual->palabra,nuevo->palabra)<0 && actual->siguiente!=NULL){
-						anterior=actual;
-						actual=actual->siguiente;
-						
+                    encontrado = 0;
+					while(actual!=NULL && !encontrado){
+                        if(strcmp(actual->palabra,nuevo->palabra)<0){
+                            anterior=actual;
+                            actual=actual->siguiente;
+                        }else{
+                            encontrado = 1;
+                        }
 					}
-					anterior->siguiente=nuevo;
-					if(actual!=anterior){
-						nuevo->siguiente=actual;
-					}
-					else{
-						nuevo->siguiente=NULL;
-					}
+                    if(actual == inicio){
+                        nuevo->siguiente = inicio;
+                        inicio = nuevo;
+                    }else{
+                        anterior->siguiente = nuevo;
+                        
+                        if(encontrado){
+                            nuevo->siguiente = actual;
+                        }
+                    }
 				}
-				pch=strtok(NULL," ,.-");
+				pch=strtok(NULL," ");
 			}
 			no_linea++;
 		}
