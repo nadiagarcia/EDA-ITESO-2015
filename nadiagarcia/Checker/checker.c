@@ -23,15 +23,22 @@ int main() {
 			push(&stack,operacion[i]);
 		}else if(operacion[i] == ')' || operacion[i] == ']' || operacion[i] == '}'){
 			char par = top(stack);
-			if(par == '(' && operacion[i] == ')')
+			if(par == '(' && operacion[i] == ')'){
 				error = 0;
-			else if(par == '[' && operacion[i] == ']')
+				pop(&stack);
+			}
+			else if(par == '[' && operacion[i] == ']'){
 				error = 0;
-			else if (par == '{' && operacion[i] == '}')
+				pop(&stack);
+			}
+			else if (par == '{' && operacion[i] == '}'){
 				error = 0;
+				pop(&stack);
+			}
 			else
 				error = 1;
 		}
+		i++;
 	}
 
 	if(error){
@@ -39,6 +46,8 @@ int main() {
 	}else{
 		if(!isEmpty(stack))
 			printf("La operacion esta mal formada\n");
+		else
+			printf("La operacion esta bien formada\n");
 	}
 
 	return 0;
