@@ -14,7 +14,7 @@ int main() {
 	int i = 0, error = 0;
 	printf("Dame la operacion a revisar\n");
 
-	gets(operacion);
+	scanf("%s",operacion);
 
 	PILA *stack = NULL;
 
@@ -37,7 +37,7 @@ int main() {
 	if(error){
 		printf("La operacion esta mal formada\n");
 	}else{
-		if(!isEmtpy(stack))
+		if(!isEmpty(stack))
 			printf("La operacion esta mal formada\n");
 	}
 
