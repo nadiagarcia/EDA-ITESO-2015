@@ -11,42 +11,45 @@
 #include "pilas.h"
 
 int main() {
-	setvbuf(stdout, NULL, _IONBF, 0); //Codigo eclipse
-	PILA * stack = NULL;
-	char operacion[100];
-	int i = 0, error = 0;
-	char par;
+    setvbuf(stdout, NULL, _IONBF, 0); //Codigo eclipse
+    PILA * stack = NULL;
+    char operacion[100];
+    int i = 0, error = 0;
+    char par;
 
-	printf("Dame la operacion a revisar\n");
-	gets(operacion);
+    printf("Dame la operacion a revisar\n");
+    gets(operacion);
 
-	while (operacion[i] && !error) {
-		if (operacion[i] == '(' || operacion[i] == '[' || operacion[i] == '{') {
-			push(&stack, operacion[i]);
-		} else if (operacion[i] == ')' || operacion[i] == ']' || operacion[i] == '}') {
-			par = top(stack);
-			if (par == '(' && operacion[i] == ')') {
-				error = 0;
-			} else if (par == '[' && operacion[i] == ']') {
-				error = 0;
-			} else if (par == '{' && operacion[i] == '}') {
-				error = 0;
-			} else{
-				error = 1;
-			}
-		}
-		i++;
-	}
+    while (operacion[i] && !error && i<100) {
+        if (operacion[i] == '(' || operacion[i] == '[' || operacion[i] == '{') {
+            push(&stack, operacion[i]);
+        } else if (operacion[i] == ')' || operacion[i] == ']' || operacion[i] == '}') {
+            par = top(stack);
+            if (par == '(' && operacion[i] == ')') {
+                error = 0;
+                pop(&stack);
+            } else if (par == '[' && operacion[i] == ']') {
+                error = 0;
+                pop(&stack);
+            } else if (par == '{' && operacion[i] == '}') {
+                error = 0;
+                pop(&stack);
+            } else{
+                error = 1;
+            }
+        }
+        i++;
+    }
 
-	if(error){
-		printf("La operacion está mal formada\n");
-	}else{
-		if(!isEmpty(stack)){
-			printf("La operacion está mal formada\n");
-		} else{
-			printf("La operacion está bien formada\n");
-		}
-	}
+    if(error){
+        printf("La operacion esta mal formada\n");
+    }else{
+        if(isEmpty(stack)){
+            printf("La operacion esta bien formada\n");
+        }else{
+            printf("La operacion esta mal formada\n");
+        }
+    }
 
-	return 0;
+    return 0;
 }
