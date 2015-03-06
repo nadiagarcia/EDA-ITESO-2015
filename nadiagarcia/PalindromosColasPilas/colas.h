@@ -15,14 +15,14 @@ typedef struct Cola {
 	struct Cola *siguiente;
 } COLA;
 
-int isEmpty(COLA *queue) {
+int isEmptyQ(COLA *queue) {
 	if (queue == NULL)
 		return 1;
 	else
 		return 0;
 }
 
-void empty(COLA **queue) {
+void emptyQ(COLA **queue) {
 	if (queue != NULL) {
 		COLA *aux;
 		while (*queue != NULL) {
@@ -33,7 +33,7 @@ void empty(COLA **queue) {
 	}
 }
 
-ELEMENTO top(COLA *queue) {
+ELEMENTO topQ(COLA *queue) {
 	if (queue == NULL) {
 		printf("Error, cola vacia");
 		return -1; //valor que indica un error al hacer top
@@ -41,7 +41,7 @@ ELEMENTO top(COLA *queue) {
 	return queue->iValor;
 }
 
-ELEMENTO pop(COLA **queue) {
+ELEMENTO popQ(COLA **queue) {
 
 	if (*queue == NULL) {
 		printf("Error, cola vacia");
@@ -59,7 +59,7 @@ ELEMENTO pop(COLA **queue) {
 	return valor;
 }
 
-void push(COLA **queue, ELEMENTO e) {
+void pushQ(COLA **queue, ELEMENTO e) {
 	COLA *nuevo = (COLA *) malloc(sizeof(COLA));
 	nuevo->iValor = e;
 	nuevo->siguiente = NULL;
