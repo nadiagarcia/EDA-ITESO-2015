@@ -5,7 +5,7 @@ typedef int ELEMENTO;
 
 typedef struct Pila {
 	ELEMENTO iValor;
-	struct Pila siguiente;
+	struct Pila *siguiente;
 } PILA;
 
 int isEmpty(PILA *stack) {
@@ -29,7 +29,7 @@ void empty(PILA **stack) {
 ELEMENTO top(PILA *stack) {
 
 	if (stack == NULL) {
-		pritnf("Error, pila vacia");
+		printf("Error, pila vacia");
 		return -1; //valor que indica un error al hacer top
 	}
 
@@ -39,7 +39,7 @@ ELEMENTO top(PILA *stack) {
 ELEMENTO pop(PILA **stack) {
 
 	if (*stack == NULL) {
-		pritnf("Error, pila vacia");
+		printf("Error, pila vacia");
 		return -1; //valor que indica un error al hacer top
 	}
 

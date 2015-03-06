@@ -12,7 +12,7 @@ typedef int ELEMENTO;
 
 typedef struct Cola {
 	ELEMENTO iValor;
-	struct Cola siguiente;
+	struct Cola *siguiente;
 } COLA;
 
 int isEmpty(COLA *queue) {
@@ -35,7 +35,7 @@ void empty(COLA **queue) {
 
 ELEMENTO top(COLA *queue) {
 	if (queue == NULL) {
-		pritnf("Error, cola vacia");
+		printf("Error, cola vacia");
 		return -1; //valor que indica un error al hacer top
 	}
 	return queue->iValor;
@@ -44,7 +44,7 @@ ELEMENTO top(COLA *queue) {
 ELEMENTO pop(COLA **queue) {
 
 	if (*queue == NULL) {
-		pritnf("Error, cola vacia");
+		printf("Error, cola vacia");
 		return -1; //valor que indica un error al hacer top
 	}
 
