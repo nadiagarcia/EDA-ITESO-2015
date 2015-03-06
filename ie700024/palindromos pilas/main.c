@@ -1,53 +1,47 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "pilas.h"
 
-typedef int ELEMENTO;
 
-typedef struct Pila {
-    ELEMENTO iValor;
-    struct Pila *siguiente;
-} PILA;
+int main(){
 
-int isEmpty(PILA *stack) {
-    if (stack == NULL)
-        return 1;
-    else
-        return 0;
-}
+    PILA *analiza = NULL;
+    PILA *compara = NULL;
+    PILA *palindromo = NULL;
 
-void empty(PILA **stack) {
-    if (stack != NULL) {
-        PILA *aux;
-            while (*stack != NULL) {
-                aux = (*stack)->siguiente;
-                free(*stack);
-                *stack = aux;
-            }
+    char frase [50];
+    int i=0, pal=0;
+    printf("Ingrese una frase para analizar si es palindromo: ");
+    gets(frase);
+
+    while (frase[i] !=0){
+        push(&analiza,frase[i]);
+        push(&compara,frase[i]);
+        i++;
     }
-}
 
-ELEMENTO top(PILA *stack) {
-if (stack == NULL) {
-printf("Error, pila vacia");
-return -1; //valor que indica un error al hacer top
-}
-return stack->iValor;
-}
-ELEMENTO pop(PILA **stack) {
-if (*stack == NULL) {
-printf("Error, pila vacia");
-return -1; //valor que indica un error al hacer top
-}
-ELEMENTO valor;
-PILA *aux = (*stack)->siguiente;
-valor = (*stack)->iValor;
-free(*stack);
-*stack = aux;
-return valor;
-}
-void push(PILA **stack, ELEMENTO e) {
-PILA *nuevo = (PILA *) malloc(sizeof(PILA));
-nuevo->iValor = e;
-nuevo->siguiente = *stack;
-*stack = nuevo;
+    while(analiza!=NULL){
+        push(&palindromo, pop(&analiza));
+    }
+
+    while(palindromo!=NULL){
+        printf("\n%s  ", compara);
+        printf("%s", palindromo);
+         pop(&palindromo);
+         pop(&compara);
+         }if(top(palindromo)!=top(compara)){
+            pal=0;
+         }else{
+            pal=1;
+    }
+
+   if(pal==1){
+        printf("\nLa frase es un palindromo");
+   }else{
+        printf("\nLa frase no es un palindromo");
+   }
+
+
+return 0;
 }
