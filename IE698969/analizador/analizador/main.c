@@ -27,10 +27,13 @@ int main() {
             par = top(stack);
             if (par == '(' && operacion[i] == ')') {
                 error = 0;
+                pop(&stack);
             } else if (par == '[' && operacion[i] == ']') {
                 error = 0;
+                pop(&stack);
             } else if (par == '{' && operacion[i] == '}') {
                 error = 0;
+                pop(&stack);
             } else{
                 error = 1;
             }
