@@ -34,7 +34,6 @@ int main (int argc, char* argv[]) {
 	if (argc == 2) { //infix => postfix converter
 	pch = strtok (argv[1]," ");
 	while (pch != NULL) {
-
 		if (strcmp (pch, "+") == 0) 	  {f = '+' + 32000; op = SUMA;}
 		else if (strcmp (pch, "-") == 0) {f = '-' + 32000; op = RESTA;}
 		else if (strcmp (pch, "/") == 0) {f = '/' + 32000; op = DIV;}
@@ -47,8 +46,7 @@ int main (int argc, char* argv[]) {
 			q_push (&output, atoi(pch));
 			pch = strtok (NULL, " \n");
 			continue;	 
-		}
-				
+		}	
 		//If an operator will be added, execute this: 
 		if (!isEmpty (operators)) i = top (operators) - 32000;
 		else i = -5;
@@ -77,9 +75,9 @@ int main (int argc, char* argv[]) {
 			}
 			push (&operators, f);
 		}
-			pch = strtok (NULL, " \n");
+		pch = strtok (NULL, " \n");
 	}
-	
+
 	while (!isEmpty (operators)) {
 		q_push (&output, pop(&operators));
 	}
@@ -92,12 +90,14 @@ int main (int argc, char* argv[]) {
 			printf ("%c ", i);
 		}
 		else printf ("%d ", i);
-		
 	}
 	printf ("\n");
+	empty (&operators);
+	q_empty (&input);
+	q_empty (&output);
 	return 0;
 	}
-	
+
 	
 	else {//RPN SOLVER
 	i = 1;
@@ -132,7 +132,12 @@ int main (int argc, char* argv[]) {
 			push (&operators, pow(b,a));
 		}
 	}
-	printf ("Resultado = %d\n", top (operators));
+	a = pop (&operators);
+	if (isEmpty (operators)) printf ("Resultado = %d\n", a);
+	else printf ("Bad formula\n");
+	empty (&operators);
+	q_empty (&input);
+	q_empty (&output);
 	}
 }
 
