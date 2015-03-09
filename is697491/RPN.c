@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "pilas.h"
 #include "colas.h"
 
@@ -13,9 +14,10 @@
 #define PARS_C -1
 
 int get_pref (char c) ;
-
+//Due to linux's wildcards [*], use "x" to signify a multiplication
+//Compile: cc     RPN.c   -lm -o RPN
 int main (int argc, char* argv[]) {
-	int i, f = 0, a = 2, op;
+	int i, f = 0, a = 2, op, b;
 	char string[50];
 	char temp[100];
 	char *pch;
@@ -24,17 +26,20 @@ int main (int argc, char* argv[]) {
 	COLA *input = NULL, *output = NULL;
 	
 	if (argc < 2) {
-		printf ("RPN Converter:\nExec: %s \"Equacion\"\n", argv[0]);
+		printf ("RPN Converter: %s \"Equation\"\n", argv[0]);
+		printf ("RPN Solver: %s Equation without \"\"\n", argv[0]);
 		return 0;
 	}
-		
+	
+	if (argc == 2) { //infix => postfix converter
 	pch = strtok (argv[1]," ");
 	while (pch != NULL) {
 
 		if (strcmp (pch, "+") == 0) 	  {f = '+' + 32000; op = SUMA;}
 		else if (strcmp (pch, "-") == 0) {f = '-' + 32000; op = RESTA;}
 		else if (strcmp (pch, "/") == 0) {f = '/' + 32000; op = DIV;}
-		else if (strcmp (pch, "*") == 0) {f = '*' + 32000; op = MULTI;}
+		else if (strcmp (pch, "*") == 0) {f = 'x' + 32000; op = MULTI;}
+		else if (strcmp (pch, "x") == 0) {f = 'x' + 32000; op = MULTI;}
 		else if (strcmp (pch, "^") == 0) {f = '^' + 32000; op = EXP;}
 		else if (strcmp (pch, "(") == 0) {f = '(' + 32000; op = PARS_O;}
 		else if (strcmp (pch, ")") == 0) {f = ')' + 32000; op = PARS_C;}
@@ -49,6 +54,7 @@ int main (int argc, char* argv[]) {
 		else i = -5;
 		if (i == '+') 	   	i = SUMA;
 		else if (i == '-') 	i = RESTA;
+		else if (i == 'x') 	i = MULTI;
 		else if (i == '*') 	i = MULTI;
 		else if (i == '/') 	i = DIV;
 		else if (i == '(') 	i = PARS_O;
@@ -79,6 +85,7 @@ int main (int argc, char* argv[]) {
 	}
 	
 	while (!q_isEmpty (output)) {
+		//q_push (&input, q_top (&output));
 		i = q_pop(&output);
 		if (i > 32000) {
 			i - 32000; 
@@ -89,6 +96,44 @@ int main (int argc, char* argv[]) {
 	}
 	printf ("\n");
 	return 0;
+	}
+	
+	
+	else {//RPN SOLVER
+	i = 1;
+	while (i <= argc - 1) { //Add everything to a stack
+		if (strcmp (argv[i], "+") == 0) 	  op = 1; //SUMA;
+		else if (strcmp (argv[i], "-") == 0) op = 2; //RESTA;
+		else if (strcmp (argv[i], "/") == 0) op = 3; //DIV;
+		else if (strcmp (argv[i], "x") == 0) op = 4; //MULTI;
+		else if (strcmp (argv[i], "^") == 0) op = 5; //EXP;
+		else if (strcmp (argv[i], "(") == 0) op = 6; //PARS_O;
+		else if (strcmp (argv[i], ")") == 0) op = 7; //PARS_C;
+		else { 
+			//printf (": %d\n", atoi(argv[i]));
+			push (&operators, atoi(argv[i]));
+			i++;
+			continue;	 
+		}
+		//If a operand was execured
+		i++;
+		a = pop (&operators);
+		b = pop (&operators);
+		switch (op) {
+		case 1: //suma
+			push (&operators, a + b); break;
+		case 2: //resta
+			push (&operators, b - a); break;
+		case 3: //div
+			push (&operators, b / a); break;
+		case 4: //multi				
+			push (&operators, b * a); break;
+		case 5: //exp
+			push (&operators, pow(b,a));
+		}
+	}
+	printf ("Resultado = %d\n", top (operators));
+	}
 }
 
 int get_pref (char c) {
