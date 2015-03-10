@@ -23,7 +23,13 @@ int main(){
 	printf("Ingrese la potencia a desarrollar (x+1)\n");
 	scanf("%d", &n);
 	for(i = n; i >= 0; i--){
-		printf("%dx^%d ", coeficiente(n,i), i);
+		if(i != 0 && i != 1){ //Estas condiciones ayudan a tener una salida mas limpia
+			printf("%dx^%d ", coeficiente(n,i), i);
+		} else if(i == 0){
+			printf("%d ", coeficiente(n,i));
+		} else if(i == 1){
+			printf("%dx ", coeficiente(n,i));
+		}
 	}
 	return 0;
 }
