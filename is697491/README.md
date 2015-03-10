@@ -8,3 +8,4 @@ Esta es mi carpeta personal para la clase de Estructura de Datos y Algoritmos 1,
 - Logica Matemarica: Checar Parentesis
 - Palindromos
 - in-fija => post-fija
+- Numeros especiales
