@@ -1,25 +1,37 @@
 #include <stdio.h>
 
+void reset ();
 int digits (int n);
 int check (int n, int o);
+int used[] = {0,0,0,0,0,0,0,0,0};
 
 int main (int argc, char* argv[]) {
 	int n, max = 987654321;
 	if (argc == 2) max = atoi(argv[1]);
 	for (n = 1; n < max; n++) {
 		check (n,n);
+		reset();
 	}
 	return 0;
 }
 
 int check (int n, int o) {
-	if (n % digits(n) != 0) return 0;
+	if (n % digits(n) != 0) return 0; 
 	if (n % 10 == 0 && n != 0) return 0;
+	if (used[n % 10] == 1) return 0;
+	else used[n % 10] = 1;
 	
 	if (n == 0) printf ("%d si es valido\n", o);
 	else return check (n / 10, o);
 	return 1;
 } 
+
+void reset () { 
+	int n;
+	for (n = 0; n < 10; n++) {
+		used[n] = 0;
+	}
+}
 
 int digits (int n) {
 	if (n < 0) 			return 0;
