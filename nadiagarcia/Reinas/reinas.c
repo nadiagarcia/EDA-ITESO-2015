@@ -8,6 +8,8 @@
 #include <stdio.h>
 #define SIZE 8
 
+int control[SIZE][SIZE] = { { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+		{ 0 } };
 int tablero[SIZE][SIZE] = { { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
 		{ 0 } };
 
@@ -15,22 +17,22 @@ void llenarAtaque(int i, int j, int num) {
 	//vertical
 	int fila;
 	for (fila = 0; fila < SIZE; fila++) {
-		if (tablero[fila][j] == 0)
-			tablero[fila][j] = num;
+		if (control[fila][j] == 0)
+			control[fila][j] = num;
 	}
 
 	//horizontal
 	int columna;
 	for (columna = 0; columna < SIZE; columna++) {
-		if (tablero[i][columna] == 0)
-			tablero[i][columna] = num;
+		if (control[i][columna] == 0)
+			control[i][columna] = num;
 	}
 
 	//diagonal, izq arriba
 	fila = i, columna = j;
 	while (fila >= 0 && columna >= 0) {
-		if (tablero[fila][columna] == 0)
-			tablero[fila][columna] = num;
+		if (control[fila][columna] == 0)
+			control[fila][columna] = num;
 
 		fila--, columna--;
 	}
@@ -38,8 +40,8 @@ void llenarAtaque(int i, int j, int num) {
 	//diagonal, derecha arriba
 	fila = i, columna = j;
 	while (fila >= 0 && columna < SIZE) {
-		if (tablero[fila][columna] == 0)
-			tablero[fila][columna] = num;
+		if (control[fila][columna] == 0)
+			control[fila][columna] = num;
 
 		fila--, columna++;
 	}
@@ -47,8 +49,8 @@ void llenarAtaque(int i, int j, int num) {
 	//diagonal, izq abajo
 	fila = i, columna = j;
 	while (fila < SIZE && columna >= 0) {
-		if (tablero[fila][columna] == 0)
-			tablero[fila][columna] = num;
+		if (control[fila][columna] == 0)
+			control[fila][columna] = num;
 
 		fila++, columna--;
 	}
@@ -56,8 +58,8 @@ void llenarAtaque(int i, int j, int num) {
 	//diagonal, derecha abajo
 	fila = i, columna = j;
 	while (fila < SIZE && columna < SIZE) {
-		if (tablero[fila][columna] == 0)
-			tablero[fila][columna] = num;
+		if (control[fila][columna] == 0)
+			control[fila][columna] = num;
 
 		fila++, columna++;
 	}
@@ -67,8 +69,8 @@ void limpiarAtaque(int num) {
 	int i, j;
 	for (i = 0; i < SIZE; i++) {
 		for (j = 0; j < SIZE; j++) {
-			if (tablero[i][j] == num)
-				tablero[i][j] = 0;
+			if (control[i][j] == num)
+				control[i][j] = 0;
 		}
 	}
 }
@@ -82,7 +84,7 @@ void imprimirTablero() {
 		printf("\n");
 	}
 
-	printf("========================================\n");
+	printf("=====================================================================\n");
 
 }
 
@@ -94,11 +96,13 @@ int colocarReina(int reina) {
 		int i, j;
 		for (i = 0; i < SIZE; i++) {
 			for (j = 0; j < SIZE; j++) {
-				if (tablero[i][j] == 0) {
+				if (control[i][j] == 0) {
+					control[i][j] = reina;
 					tablero[i][j] = reina;
 					llenarAtaque(i, j, reina);
 					colocarReina(reina + 1);
 					limpiarAtaque(reina);
+					tablero[i][j] = 0;
 				}
 			}
 		}
