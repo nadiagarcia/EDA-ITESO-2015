@@ -12,62 +12,55 @@ int tablero[SIZE][SIZE] = { { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
 		{ 0 } };
 //inicializa tablero todos cero. Dos dimensiones.
 void llenarAtaque(int i, int j, int num) { //Lugares que ataca la reina colocada (funcion para ahorrar lineas).
-
-	//vertical
 	int fila;
-	for (fila = 0; fila < SIZE; fila++) {
-		if (tablero[fila][j] == 0)
+	for (fila = 0; fila < SIZE; fila++) { //Llenar vertical
+		if (tablero[fila][j] == 0) {
 			tablero[fila][j] = num;
+		}
 	}
-
-	//horizontal
 	int columna;
-	for (columna = 0; columna < SIZE; columna++) {
-		if (tablero[i][columna] == 0)
+	for (columna = 0; columna < SIZE; columna++) { //Llenar horizontal
+		if (tablero[i][columna] == 0) {
 			tablero[i][columna] = num;
+		}
 	}
-
-	//diagonal,izquierda arriba
+//LLenar diagonales, izquierda arriba
 	fila = i, columna = j;
 	while (fila >= 0 && columna >= 0) {
-		if (tablero[fila][columna] == 0)
+		if (tablero[fila][columna] == 0) {
 			tablero[fila][columna] = num;
+		}
 		fila--, columna--;
-
 	}
-
-	//diagonal,derecha arriba
+//LLenar diagonales, derecha arriba
 	fila = i, columna = j;
 	while (fila >= 0 && columna < SIZE) {
-		if (tablero[fila][columna] == 0)
+		if (tablero[fila][columna] == 0) {
 			tablero[fila][columna] = num;
+		}
 		fila--, columna++;
-
 	}
-
-	//diagonal,izquierda abajo
+//LLenar diagonales, izquierda abajo
 	fila = i, columna = j;
 	while (fila < SIZE && columna >= 0) {
-		if (tablero[fila][columna] == 0)
+		if (tablero[fila][columna] == 0) {
 			tablero[fila][columna] = num;
+		}
 		fila++, columna--;
-
 	}
-
-	//diagonal,derecha arriba
+//LLenar diagonales, derecha abajo
 	fila = i, columna = j;
 	while (fila < SIZE && columna < SIZE) {
-		if (tablero[fila][columna] == 0)
+		if (tablero[fila][columna] == 0) {
 			tablero[fila][columna] = num;
+		}
 		fila++, columna++;
-
 	}
-
 }
 void limpiarAtaque(int num) {
 	int i, j;
 	for (i = 0; i < SIZE; i++) {
-		for (j = 0; i < SIZE; j++) {
+		for (j = 0; j < SIZE; j++) {
 			if (tablero[i][j] == num) {
 				tablero[i][j] = 0;
 			}
@@ -78,7 +71,7 @@ void limpiarAtaque(int num) {
 void imprimirTablero() {
 	int i, j;
 	for (i = 0; i < SIZE; i++) {
-		for (j = 0; i < SIZE; j++) {
+		for (j = 0; j < SIZE; j++) {
 			printf("%d\t", tablero[i][j]);
 		}
 		printf("\n");
@@ -86,9 +79,9 @@ void imprimirTablero() {
 	printf("\n===================\n");
 }
 int colocarReina(int reina) {
-	if (reina == SIZE + 1) {
+	if (reina == SIZE + 1) { //Cuando intente poner una reina de mas ya terminamos.
 		imprimirTablero();
-		return 1;
+		return 1; //Si fue solucion
 	} else {
 		int i, j;
 		for (i = 0; i < SIZE; i++) {
@@ -101,8 +94,7 @@ int colocarReina(int reina) {
 				}
 			}
 		}
-
-		return 0;
+		return 0; //Sin solucion
 	}
 }
 int main() {
