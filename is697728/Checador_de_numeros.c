@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-int contador=0,a,b,c,d,e,f,g,h,i;
+int contador,a,b,c,d,e,f,g,h,i;
 
 int longi(int j){
 	
@@ -41,16 +41,19 @@ int inicializar(){
 	g=0;
 	h=0;
 	i=0;
+	contador=1;
 }
+
 
 int revisar(int j,int original){
 	
-	inicializar();
-	
 	int actual;
 	
-	if(j == 0)
+	if(j == 0){
+	
 		printf("%d es valido\n",original);
+		
+	}
 				
 	if(j%longi(j)==0){
 		
@@ -59,34 +62,43 @@ int revisar(int j,int original){
 			actual=j%10;
 			
 			if(actual != a && actual != b && actual != c && actual != d && actual != e && actual != f&& actual != g && actual != h && actual != i){
-				if(contador = 0){
-					a = contador;
-				}
+				contador=contador+1;
+			
 				if(contador = 1){
-					b = contador;
+					a = actual;
+				} 
+				
+				else if(contador = 2){
+					b = actual;
 				}
-				if(contador = 2){
-					c = contador;
+				
+				else if(contador = 3){
+					c = actual;
 				}
-				if(contador = 3){
-					d = contador;
+				
+				else if(contador = 4){
+					d = actual;
 				}
-				if(contador = 4){
-					e = contador;
+				
+				else if(contador = 5){
+					e = actual;
 				}
-				if(contador = 5){
-					f = contador;
+				
+				else if(contador = 6){
+					f = actual;
 				}
-				if(contador = 6){
-					g = contador;
+				
+				else if(contador = 7){
+					g = actual;
 				}
-				if(contador = 7){
-					h = contador;
+				
+				else if(contador = 8){
+					h = actual;
 				}
-				if(contador = 8){
-					i = contador;
-				}
-				contador++;
+				
+				else if(contador = 9){
+					i = actual;
+				}			
 				
 				return revisar(j/10,original); 
 				
@@ -97,14 +109,17 @@ int revisar(int j,int original){
 	}
 	else return 0;
 	
-	
 }
 
 int main(){
-	int i,copia;
 
-	for(i = 1;i < 987654321;i++){
-		revisar(i,i);	
+	int i;
+
+	for(i = 1; i < 987654321;i++){
+	
+		inicializar();	
+		revisar(i,i);
+			
 	}
 	
 	return 0;
