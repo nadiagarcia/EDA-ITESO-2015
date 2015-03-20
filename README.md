@@ -18,7 +18,7 @@ En el Git Shell:
   2. git add [los documentos a agregar]
   3. git commit -m "mensaje"
   4. git pull
-  5. git push origin <nombre de branch>
+  5. git push origin [nombre de branch]
 
 ### COMO JUNTAR TU BRANCH CON OTRA
   1. git checkout [nombre de branch destino]
