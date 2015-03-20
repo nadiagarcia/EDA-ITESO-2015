@@ -73,17 +73,36 @@ int eliminar(int clave) {
 }
 
 int main() {
+	setvbuf(stdout, NULL, _IONBF, 0); //Codigo eclipse
+	int usuario, opcion = 0, salir = 0;
 
-	int i = 1;
-	int usuario;
-	int opcion;
-	printf("Ingrese el expediente\n");
-	scanf("%s", &usuario);
-	printf("Qué desea hacer\n");
-	scanf("%d", &opcion);
-
-	switch (opcion)
-	;
+	while (!salir) {
+		printf("Ingrese el expediente\n");
+		scanf("%d", &usuario);
+		printf("Seleccione opcion:\n");
+		printf("1. Insertar\n");
+		printf("2. Buscar\n");
+		printf("3. Eliminar\n");
+		printf("4. Salir\n");
+		scanf("%d", &opcion);
+		switch (opcion) {
+		case 1:
+			insertar(usuario);
+			break;
+		case 2:
+			printf("%d", buscar(usuario));
+			break;
+		case 3:
+			eliminar(usuario);
+			break;
+		case 4:
+			salir = 1;
+			break;
+		default:
+			printf("Ingrese una opcion valida.\n");
+			break;
+		}
+	}
 
 	return 0;
 }
