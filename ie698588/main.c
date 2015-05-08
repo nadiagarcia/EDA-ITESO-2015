@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
-#define PASS 12345
+
 
 /*
 Funciones para usuario:
@@ -369,15 +369,9 @@ void buscar (PELICULA **iniciop, JUEGO **inicioj){//Terminada junto con Rentar
         break;
     }
     getch();
-
 }
 
 void imprimir(PELICULA **iniciop, JUEGO **inicioj){  //Terminada
-
-void carrito (){//El usuario podra ver que lleva rentado y cuanto le costara
-
-
-}
 
     PELICULA *actualp = *iniciop;
     JUEGO *actualj = *inicioj;
@@ -437,10 +431,133 @@ void carrito (){//El usuario podra ver que lleva rentado y cuanto le costara
     }
 }
 
+JUEGO rentar_pelicula(JUEGO **actualj){
+    int rentar;
+    JUEGO *aux = *actualj;
+
+    printf("\nDesea rentar la pelicula?");
+    printf("\n1.Si / 0.No");
+    printf("A");
+    scanf("%d", &rentar);
+    printf("A");
+
+    if(rentar && aux->cantidadj !=0 )
+    aux->cantidadj = aux->cantidadj -1;
+
+    else if(aux->cantidadj == 0)
+        printf("Todos los elementos se encuentran en renta");
+
+
+    return *aux;
+}
+
+JUEGO buscarj(JUEGO **inicioj, int * contador){
+
+	  JUEGO *actualj = *inicioj;
+	  char nombre_juego[25];
+      int m, aux = 0, rentar, existente = 1;
+
+	    if(*inicioj == NULL){
+            printf("\nAun no hay elementos en la tienda.");
+        }else{
+            printf("\tIngrese el nombre del videojuego:");
+            fflush(stdin);
+            gets(nombre_juego);
+            system("cls");
+
+            while(aux == 0){
+                m = strcmp(nombre_juego, actualj->nombrej);
+
+                if(m == 0){
+                    printf("\t%s\n", nombre_juego);
+                    printf("\nNombre: %s",actualj->nombrej);
+                    printf("\nGenero: %s",actualj->consolaj);
+                    printf("\nAnio: %d",actualj->anioj);
+                    printf("\nCosto: %d",actualj->costoj);
+                    printf("\nDias de renta: %d",actualj->dias_rentaj);
+                    printf("\nElementos en la tienda: %d\n", actualj->cantidadj);
+                    aux = 1;
+                }
+                else if(m != 0 && actualj->siguiente == NULL){//si el elemento no esta en la lista
+                    printf("\n%s no disponible en la tienda.", nombre_juego);
+                    existente = 0;
+                    aux = 1;
+                }
+                else
+                actualj = actualj->siguiente;
+            }
+            if(existente){
+                    rentar_pelicula(&actualj);
+                /*printf("\nDesea rentar la pelicula?");
+                printf("\n1.Si / 0.No");
+                scanf("%d", &rentar);
+                if(rentar){//El usuario desea rentar la pelicula
+                    //actualj = actualj->anterior;
+                    //el problema esta cuando se quiere rentar la primera pelicula
+                    actualj->cantidadj = actualj->cantidadj-1;
+                    contador++;
+                    return *actualj;
+                }*/
+            }
+        }
+    getch();
+}
+
+PELICULA buscarp(PELICULA **iniciop, int *contador){
+
+    PELICULA *actualp = *iniciop;
+    char nombre_pelicula[25];
+    int m, aux = 0, renta, existente = 1;
+
+    if(*iniciop == NULL){
+        printf("\nAun no hay peliculas en la tienda.");
+    }
+    else{
+        printf("\tIngrese el nombre de la pelicula:");
+        fflush(stdin);
+        gets(nombre_pelicula);
+        system("cls");
+
+    while(aux == 0){
+        m = strcmp(nombre_pelicula, actualp->nombrep);
+
+        if(m == 0){
+            printf("\t%s\n", nombre_pelicula);
+            printf("\nNombre: %s",actualp->nombrep);
+            printf("\nGenero: %s",actualp->generop);
+            printf("\nAnio: %d",actualp->aniop);
+            printf("\nCosto: %d",actualp->costop);
+            printf("\nDias de renta: %d",actualp->dias_rentap);
+            printf("\nElementos en la tienda: %d\n", actualp->cantidadp);
+            aux = 1;
+        }
+        else if(m != 0 && actualp->siguiente == NULL){//si el elemento no esta en la lista
+            printf("\n%s no disponible en la tienda.", nombre_pelicula);
+            existente = 0;
+            aux = 1;
+        }
+        actualp = actualp->siguiente;
+        }
+    if(existente){
+        printf("\nDesea rentarla?");
+        printf("\n1.Si / 0.No");
+        scanf("%d", &renta);
+        if(renta){//El usuario desea rentar la pelicula
+            actualp = actualp->anterior;
+            actualp->cantidadp = actualp->cantidadp-1;
+            contador++;
+            return *actualp;
+            }
+        }
+    }
+}
+
 int main(){
 	setvbuf(stdout, NULL, _IONBF, 0);
 	//Declaracion de variables de main
-	int op, out, id, password, op_usuario;
+	int op, out, id, op_usuario, dec, contador = 1, m;
+	const char PASS[] = "12345";
+	char password [6];
 	//Declaracion de punteros inicio de las dos listas
 	PELICULA * iniciop = NULL;
 	JUEGO * inicioj = NULL;
@@ -454,20 +571,34 @@ int main(){
         if(id){//modo usuario
             printf("\t<<<MODO USUARIO>>>\n\n\t\t");
             printf("\n\n\tQue desea hacer?\n");
-            printf("\n1.Imprimir todos los elementos \n2.Buscar un elemento");
+            printf("\n1.Imprimir todos los elementos \n2.Buscar un elemento \n3.Ver carrito");
             scanf("%d",&op_usuario);
             if(op_usuario == 1)//Si usuario elige imprimir elementos
                 imprimir(&iniciop,&inicioj);
-            else //Si usuario elige buscar elementos
-                buscar(&iniciop, &inicioj);
+            else if(op_usuario == 2){//Si usuario elige buscar elementos
+                system("cls");
+                printf("QUE DESEA BUSCAR?\n\n1.Peliculas\t\t2.Videojuegos\n\n");
+                scanf("%i",&dec);
+
+                if(dec)//Peliculas
+                    buscarp(&iniciop, &contador);
+
+                else//Videojuegos
+                    buscarj(&inicioj, &contador);
+            }
+
+          //  else//Carrito
+
         }
         else{//modo empleado
             int cont = 3;
 			 while(cont!=0){
                 printf("\n\n\nIngrese la contrasenia: ");
-                scanf("%i", &password);
+                scanf("%s", &password);
 
-                if (password==PASS){
+                m = strcmp(PASS, password);
+
+                if (m == 0){
                     system("cls");
                     do{
                         system("cls");
@@ -495,6 +626,11 @@ int main(){
                         case 4:
 
                             imprimir(&iniciop, &inicioj);
+                        break;
+
+                        case 5:
+
+                            cont = 0;
                         break;
 
                         }
